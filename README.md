@@ -68,7 +68,7 @@
 ## Endpoints
 - GET:
     - /blogs: should return all of user blogs in database with content being limited to 100 char
-    - /blogs/:userId: should return all blogs from a single user
+    - /blogs/:userId: should return all blogs from a single user content being limited to 100 char
     - /blogs/{postId}: should grab all of a single blogs content and associated user
 - PATCH
     - /blogs/:postId: will update title and content of a post
