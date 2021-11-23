@@ -33,6 +33,7 @@ const Homepage = ({ getBlogs, blogs }) => {
         blogs[0].bloggerId
     :   null;
 
+    console.log(blogs)
     //conditional rendering for blog posts, a new user will not have any posts
     let blogFeed;
     blogFeed = blogs !== null && blogs[1].length > 0 ?
@@ -42,7 +43,7 @@ const Homepage = ({ getBlogs, blogs }) => {
                     <Box style={style3}>
                         <h2>{blog.title}</h2>
                         <Divider />
-                        <h3>{blog.shortened_content}...</h3>
+                        <h3>{blog.shortened_content.length < 100 ? blog.shortened_content : blog.shortened_content.concat(`...`)}</h3>
                         <Divider />
                         <h5>{blog.created_at}</h5>
                         <Link to={`/bloggeropolis/${username}/${blog.id}`}><Button variant='outlined' color="secondary">View/Edit</Button></Link>

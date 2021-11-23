@@ -16,7 +16,7 @@ const CreateBlogButton = ({ openModal, closeModal, open, id, render, reRender })
         post(`blogs/${id}`, input);
         setTitle(null);
         setContent(null);
-        reRender(render = 1);
+        reRender(render + 1);
         closeModal();
     }
 
