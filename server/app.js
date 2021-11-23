@@ -23,7 +23,10 @@ app.use(cookieParser());
 
 //function for creating a new user and finding their hashed password upon logging in
 const createUser = (username, password) => {
-    return knex('users').insert({username: username, password_hash: password}).then(data=>data)
+    return knex('users')
+        .returning('id')
+        .insert({username: username, password_hash: password})
+        .then(data=>data)
 }
 
 const getPassword = (username) => {
@@ -40,12 +43,12 @@ app.post('/create', (req, res) => {
     hash(password, saltRounds)
         .then((hash) => {
             createUser(username, hash)
-                .then(data => res.status(201).json('SUCCESSFUL CREATION'))
+                .then(data => res.status(201).json(data))
                 .catch(err => res.status(500).json(err));
         })
         .catch(err => console.log(err));
 
-    res.cookie('username', username).send('cookie set');
+    res.cookie('username', username)
 });
 
 app.post('/login', (req, res) => {
@@ -83,9 +86,14 @@ app.post('/blogs/:userId', async (req, res) => {
     res.status(201).json('BLOG HAS BEEN POSTED');
 });
 
-app.get('/blogs/:userId', async (req, res) => {
-    const userId = parseInt(req.params.userId, 10);
+app.get('/blogs/:userName', async (req, res) => {
+    const userName = req.params.userName
     
+    const userId = await knex('users')
+        .select('id')
+        .where({username: userName})
+        .then((data) => data[0].id)
+
     const blogs = await knex
         .select('*')
         .from('blogs')
@@ -93,7 +101,12 @@ app.get('/blogs/:userId', async (req, res) => {
         .innerJoin('blogs_user', 'blogs.id', '=', 'blogs_user.blog')
         .then(data => data);
 
-    res.status(200).json(blogs);
+    const result = [
+        {bloggerId: userId},
+        blogs
+    ]
+
+    res.status(200).json(result);
 });
 
 app.get('/blogs', async (req, res) => {

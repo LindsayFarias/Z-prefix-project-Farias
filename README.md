@@ -29,7 +29,7 @@
 - /bloggeropolis/login
 - /bloggeropolis/{userId}
 - /bloggeropolis/{userId}/{postId}
-- /bloggeropolis/{postId}
+- /bloggeropolis/single/{postId}
 
 ### Pages
 
