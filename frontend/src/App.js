@@ -45,7 +45,7 @@ function App() {
         <Route path='/bloggeropolis' element={<BlogFeedPage getBlogs={blogsGetter} blogs={blogs}/>}/>
         <Route path='/bloggeropolis/login' element={<LoginPage getBlogs={userBlogsGetter} />}/>
         <Route path='/bloggeropolis/:username' element={<Homepage getBlogs={userBlogsGetter} blogs={userBlogs}/>}/>
-        <Route path='/bloggeropolis/:userId/:postId' element={<SinglePostPage1 getBlog={blogGetter} blog={blog}/>}/>
+        <Route path='/bloggeropolis/:userId/:postId' element={<SinglePostPage1 setBlogs={userBlogsGetter} getBlog={blogGetter} blog={blog}/>}/>
         <Route path='/bloggeropolis/single/:postId' element={<SinglePostPage2 getBlog={blogGetter} blog={blog}/>}/>
       </Routes>
     </div>
