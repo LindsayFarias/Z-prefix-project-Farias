@@ -20,10 +20,10 @@ const BlogFeedPage = ({ getBlogs, blogs }) => {
                 <Box style={style3}>
                     <h2>{blog.title}</h2>
                     <Divider />
-                    <h3>{blog.shortened_content}</h3>
+                    <h3>{blog.shortened_content}...</h3>
                     <Divider />
                     <h5>{blog.created_at}</h5>
-                    <Link to={`/bloggeropolis/individual/${blog.id}`}><Button color='secondary' variant='outlined'>View</Button></Link>
+                    <Link to={`/bloggeropolis/single/${blog.id}`}><Button color='secondary' variant='outlined'>View</Button></Link>
                 </Box>
             </Grid>
             )

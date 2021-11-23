@@ -1,5 +1,5 @@
 version: "3"
-services:configs:
+services:
   db:
     image: 'postgres:latest'
     container_name: db
@@ -38,8 +38,9 @@ services:configs:
     networks:
       - facebook
     depends_on:
-      -server
-  
-  networks:
-    facebook:
-      driver: bridge
+      - server
+
+
+networks:
+  facebook:
+    driver: bridge

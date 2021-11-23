@@ -10,21 +10,25 @@ const AppContextProvider = ({ children }) => {
     const [cookies, setCookie, removeCookie] = useCookies(['username'])
 
 
-    const post = (url, data) => {
+    const post = async (url, data) => {
         console.log(data)
-        fetch(baseURL + url, {
+        let result = await fetch(baseURL + url, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
-        });
+        })
+        .then(data => data)
+        .catch(err => err)
+        return result
     };
 
     const patch = (url, data) => {
-        fetch(baseURL + url, {
+        return fetch(baseURL + url, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
-        });
+        })
+        .then(res => res)
     };
 
     const deletion = (url) => {
@@ -74,6 +78,21 @@ const AppContextProvider = ({ children }) => {
         p: 6,
       }; 
 
+      const style4 = {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '70%',
+        height: '75%',
+        bgcolor: 'background.paper',
+        border: '2px solid rgb(223, 228, 233)',
+        boxShadow: 24,
+        p: 5,
+      }; 
+
 
     const objValue = {
         post,
@@ -85,7 +104,8 @@ const AppContextProvider = ({ children }) => {
         darkTheme,
         style1,
         style2,
-        style3
+        style3,
+        style4
     };
 
     return (

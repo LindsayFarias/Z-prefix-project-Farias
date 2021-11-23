@@ -34,6 +34,7 @@ const getPassword = (username) => {
         .where({username})
         .select('password_hash')
         .then(data => data[0].password_hash)
+        .catch(err => err)
 };
 
 app.post('/create', (req, res) => {

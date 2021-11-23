@@ -1,9 +1,11 @@
 // Update with your config settings.
+const connection = process.env.DB_CONNECTION_STRING
 
 module.exports = {
 
   development: {
     client: 'pg',
+    // connection: connection
     connection: 'postgres://postgres:docker@localhost/bloggeropolis'
   },
 

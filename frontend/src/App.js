@@ -4,7 +4,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import BlogFeedPage from './components/pages/BlogFeedPage';
 import LoginPage from './components/pages/LoginPage';
 import Homepage from './components/pages/Homepage';
-import SinglePostPage from './components/pages/SinglePostPage';
+import SinglePostPage1 from './components/pages/SinglePostPage1';
+import SinglePostPage2 from './components/pages/SinglePostPage2';
 import Navbar from './components/Navbar';
 
 const baseURL = 'http://localhost:3001/';
@@ -26,9 +27,9 @@ function App() {
   };
 
   const blogGetter = async (id) => {
-    const urlString = `/blogs/individual/${id}`;
+    const urlString = `blogs/individual/${id}`;
     let blog = await apiCall(urlString);
-    setBlog(blog);
+    setBlog(blog[0]);
   };
 
   const userBlogsGetter = async (username) => {
@@ -42,10 +43,10 @@ function App() {
       <Navbar /> <br/>
       <Routes>
         <Route path='/bloggeropolis' element={<BlogFeedPage getBlogs={blogsGetter} blogs={blogs}/>}/>
-        <Route path='/bloggeropolis/login' element={<LoginPage/>}/>
+        <Route path='/bloggeropolis/login' element={<LoginPage getBlogs={userBlogsGetter} />}/>
         <Route path='/bloggeropolis/:username' element={<Homepage getBlogs={userBlogsGetter} blogs={userBlogs}/>}/>
-        <Route path='/bloggeropolis/:userId/:postId' element={<SinglePostPage getBlog={blogGetter} blog={blog}/>}/>
-        <Route path='/bloggeropolis/single/:postId' element={<SinglePostPage/>}/>
+        <Route path='/bloggeropolis/:userId/:postId' element={<SinglePostPage1 getBlog={blogGetter} blog={blog}/>}/>
+        <Route path='/bloggeropolis/single/:postId' element={<SinglePostPage2 getBlog={blogGetter} blog={blog}/>}/>
       </Routes>
     </div>
   );

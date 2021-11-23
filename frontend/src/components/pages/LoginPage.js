@@ -1,52 +1,74 @@
-import { Paper, Box, TextField, Grid, Typography, Button } from '@mui/material';
+import { Paper, Box, TextField, Grid, Typography, Button, Alert } from '@mui/material';
 import { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
-    const { style1, setCookie, removeCookie, post, cookies } = useContext(AppContext);
+const LoginPage = ({getBlogs}) => {
+    const { style1, setCookie, post } = useContext(AppContext);
     const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
+    const [errorMessage, setErrorMessage] = useState({error: false, type: null})
     let navigate = useNavigate();
+
+    useEffect(() => {
+        setErrorMessage({error: false, type: null});
+    }, [])
 
     useEffect(() => {
         console.log(name);
         console.log(password);
-    }, [name, password]);
+    }, [name, password, errorMessage]);
 
-    const handleName = (event) => {
-        let nameInput = event.target.value;
-        setName(nameInput);
-    };
+    //make a post request to backend for account creation, return error if username not available
+    const handleLogin = async () => {
 
-    const handlePassword = (event) => {
-        let passwordInput = event.target.value;
-        setPassword(passwordInput);
-    };
-
-    const handleLogin = () => {
         let input = {
             username: name,
             password: password
         };
-        post('login', input);
-        setCookie('username', name, {path: '/'});
-        navigate(`/bloggeropolis/${name}`)
-        setName(null);
-        setPassword(null);
+
+        let response = await post('login', input);
+
+        if(!response.ok) {
+            setErrorMessage({error: true, type: 'Incorrect Credentials Entered!'});
+            setName(null);
+            setPassword(null);
+            
+        } else {
+            setCookie('username', name, {path: '/'});
+            getBlogs(`${name}`);
+            navigate(`/bloggeropolis/${name}`);
+            setName(null);
+            setPassword(null);
+        };
+
     };
     
-    const handleAccount = () => {
+    //make a post request to backend for account creation, return error if username not available
+    const handleAccount = async () => {
         let input = {
             username: name,
             password: password
         };
-        post('create', input);
-        setCookie('username', name, {path: '/'})
-        navigate(`/bloggeropolis/${name}`)
-        setName(null);
-        setPassword(null);
+        let response = await post('create', input);
+
+        if(!response.ok) {
+            setErrorMessage({error: true, type: 'Username Already in Use!'});
+            setName(null);
+            setPassword(null);
+        } else {
+            setCookie('username', name, {path: '/'});
+            getBlogs(`${name}`);
+            navigate(`/bloggeropolis/${name}`);
+            setName(null);
+            setPassword(null);
+        };
+
     };
+
+    //show error message if an unsuccessful attempt was made
+    let error;
+    error = !errorMessage.error ? <h1>Blogger-lopolis Login</h1> : <Alert severity="error">{errorMessage.type}</Alert>
 
     return(
         <Paper elevation={3}>
@@ -55,7 +77,7 @@ const LoginPage = () => {
               sx={style1}
               noValidate
               autoComplete="off">
-                  <h1>Blogger-lopolis Login</h1> <br/>
+                {error} <br/>
                 <Grid container spacing={3} maxWidth='lg'>
                     <Grid item xs={1}></Grid>
                     <Grid item xs={4}>
@@ -67,7 +89,7 @@ const LoginPage = () => {
                         value={name}
                         id='username'
                         label='Username'
-                        onChange={(event) => handleName(event)}
+                        onChange={(event) => setName(event.target.value)}
                         />
                     </Grid>
                     <Grid item xs={12}></Grid>
@@ -82,7 +104,7 @@ const LoginPage = () => {
                         id='password'
                         label='password'
                         type='password'
-                        onChange={(event) => handlePassword(event)}
+                        onChange={(event) => setPassword(event.target.value)}
                         />
                     </Grid>
                     <Grid item xs={6}>
