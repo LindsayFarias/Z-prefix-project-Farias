@@ -39,7 +39,7 @@ const Homepage = ({ getBlogs, blogs }) => {
     blogFeed = blogs !== null && blogs[1].length > 0 ?
         blogs[1].map(blog => {
             return(
-                <Grid item >
+                <Grid key={blog.id} item >
                     <Box style={style3}>
                         <h2>{blog.title}</h2>
                         <Divider />

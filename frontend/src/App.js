@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 const baseURL = 'https://z-prefix-backend-farias.herokuapp.com/';
 
 const apiCall = async (url) => {
+  console.log(baseURL + url)
   let result = await fetch(baseURL + url);
   return result.json();
 };

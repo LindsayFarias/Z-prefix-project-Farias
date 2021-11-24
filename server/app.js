@@ -13,13 +13,9 @@ const { hash, compare } = bcrypt;
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(morgan('dev'));
-const baseURL = 'https://z-prefix-prject-farias.herokuapp.com'
-app.use(
-    cors({
-        origin: 'baseURL',
-        methods: 'GET, POST, PATCH, DELETE'
-    })
-);
+const baseURL = 'https://z-prefix-project-farias.herokuapp.com';
+
+app.use(cors());
 app.use(cookieParser());
 
 //function for creating a new user and finding their hashed password upon logging in

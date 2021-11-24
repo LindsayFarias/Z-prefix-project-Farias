@@ -16,7 +16,7 @@ const BlogFeedPage = ({ getBlogs, blogs }) => {
     blogFeed = blogs !== null && blogs.length > 0 ?
         blogs.map(blog => {
             return(
-            <Grid item>
+            <Grid key={blog.id} item>
                 <Box style={style3}>
                     <h2>{blog.title}</h2>
                     <Divider />

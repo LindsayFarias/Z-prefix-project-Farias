@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 
 export const AppContext = createContext(null);
 
-const baseURL = 'https://z-prefix-backend-farias.herokuapp.com'
+const baseURL = 'https://z-prefix-backend-farias.herokuapp.com/'
 
 const AppContextProvider = ({ children }) => {
     const [cookies, setCookie, removeCookie] = useCookies(['username'])
