@@ -54,6 +54,8 @@ const SinglePostPage1 = ({getBlog, blog, setBlogs}) => {
         };
         patch(`blogs/${id}`, input)
         setRender(render + 1);
+        setBlogs(cookies.username);
+        getBlog(id);
     }
 
     //conditional rendering for whether or not the toggle is on

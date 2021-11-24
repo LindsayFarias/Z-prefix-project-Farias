@@ -63,7 +63,7 @@ const Homepage = ({ getBlogs, blogs }) => {
                 <Grid container maxWidth='xlg' style={{width: '3%'}}> </Grid>
                 <Grid container maxWidth='xlg' style={{width: '4%'}}>
                     <Grid item xs={12}>
-                        <CreateBlogButton render={render} reRender={setRender} closeModal={closeModal} openModal={openModal} open={open} id={userId} />
+                        <CreateBlogButton setBlogs={getBlogs} render={render} reRender={setRender} closeModal={closeModal} openModal={openModal} open={open} id={userId} />
                     </Grid>
                 </Grid>
             </Box>

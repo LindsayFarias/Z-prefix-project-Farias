@@ -2,8 +2,8 @@ import { Grid, Box, Typography, Modal, Button, TextField, FormControl, InputLabe
 import { useContext, useState } from 'react';
 import { AppContext } from './context/AppContext';
 
-const CreateBlogButton = ({ openModal, closeModal, open, id, render, reRender }) => {
-    const { style2, post } = useContext(AppContext);
+const CreateBlogButton = ({ openModal, closeModal, open, id, render, reRender, setBlogs }) => {
+    const { style2, post, cookies } = useContext(AppContext);
     const [title, setTitle] = useState(null);
     const [content, setContent] = useState(null);
 
@@ -17,6 +17,7 @@ const CreateBlogButton = ({ openModal, closeModal, open, id, render, reRender })
         setTitle(null);
         setContent(null);
         reRender(render + 1);
+        setBlogs(cookies.username)
         closeModal();
     }
 
@@ -35,16 +36,16 @@ const CreateBlogButton = ({ openModal, closeModal, open, id, render, reRender })
             </Typography>
             <form id="modal-modal-description">
               <Typography sx={{p: 1}}>Title:
-                <TextField sx={{mx: 2}} required id="title" variant="outlined" label='title' onChange={(event) => setTitle(event.target.value)}/> 
+                <TextField sx={{mx: 2}} required id="title" color='secondary' variant="outlined" label='title' onChange={(event) => setTitle(event.target.value)}/> 
               </Typography>
               <Typography sx={{p: 1}}>Content:
                 <FormControl sx={{ m: 1, width: '100ch' }} variant="outlined">
                   <InputLabel htmlFor="content">Content</InputLabel> 
-                    <OutlinedInput id="content" label="content" multiline={true}
+                    <OutlinedInput id="content" color='secondary' label="content" multiline={true}
                     onChange={(event) => setContent(event.target.value)}/>
                 </FormControl>
               </Typography>
-              <Button onClick={()=> submitPost()} style={{float: 'right'}}variant='outlined'>Create</Button>
+              <Button onClick={()=> submitPost()} color='secondary' style={{float: 'right'}}variant='outlined'>Create</Button>
             </form>
           </Box>
         </Modal>

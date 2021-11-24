@@ -89,6 +89,7 @@ const LoginPage = ({getBlogs}) => {
                         value={name}
                         id='username'
                         label='Username'
+                        color='secondary'
                         onChange={(event) => setName(event.target.value)}
                         />
                     </Grid>
@@ -103,6 +104,7 @@ const LoginPage = ({getBlogs}) => {
                         value={password}
                         id='password'
                         label='password'
+                        color='secondary'
                         type='password'
                         onChange={(event) => setPassword(event.target.value)}
                         />
