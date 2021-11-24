@@ -8,7 +8,7 @@ import SinglePostPage1 from './components/pages/SinglePostPage1';
 import SinglePostPage2 from './components/pages/SinglePostPage2';
 import Navbar from './components/Navbar';
 
-const baseURL = 'http://localhost:3001/';
+const baseURL = 'https://z-prefix-backend-farias.herokuapp.com/';
 
 const apiCall = async (url) => {
   let result = await fetch(baseURL + url);

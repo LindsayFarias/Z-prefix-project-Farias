@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
-const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV || 'development']);
+const bcrypt = require('bcryptjs');
+const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV]);
 
 const app = express();
 
@@ -13,9 +13,10 @@ const { hash, compare } = bcrypt;
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(morgan('dev'));
+const baseURL = 'https://z-prefix-prject-farias.herokuapp.com'
 app.use(
     cors({
-        origin: '*',
+        origin: 'baseURL',
         methods: 'GET, POST, PATCH, DELETE'
     })
 );
@@ -36,6 +37,10 @@ const getPassword = (username) => {
         .then(data => data[0].password_hash)
         .catch(err => err)
 };
+
+app.get('/', (req, res) => {
+    res.status(200).json('successful hit')
+})
 
 app.post('/create', (req, res) => {
     let username = req.body.username;
